@@ -1,0 +1,256 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style Variables>
+        body:not(.dark){
+            /* Discord page colors */
+            --body_background_color: #FFFFFF;
+            --body_text_color_light: #313338;
+            --body_text_color: #060607;
+
+            /* Discord link colors */
+            --link_color: #006CE7;
+            --link_color_hover: #2EB6FF;
+            
+            /* Discord button colors */
+            --btn_primary_color: #5865F2;
+            --btn_primary_color_hover: #4752C4;
+            --btn_success_color: #43B581;
+            --btn_success_color_hover: #15562B;
+            --btn_secondary_color: #747F8D;
+            --btn_secondary_color_hover: #4E5058;
+            --btn_destructive_color: #F04747;
+            --btn_destructive_color_hover: #A12828;
+            --btn_link_color: #747F8D;
+            --btn_link_color_hover: #4E5058;
+            --btn_emoji_color: #4F545C;
+            --btn_emoji_color_hover: #3c4046;
+        }
+
+        body.dark{
+            --body_background_color: #313338;
+            --body_text_color_light: #DBDEE1;
+            --body_text_color: #F2F3F5;
+
+            --btn_primary_color: #5865F2;
+            --btn_primary_color_hover: #4752C4;
+            --btn_success_color: #43B581;
+            --btn_success_color_hover: #1A6334;
+            --btn_secondary_color: #4F545C;
+            --btn_secondary_color_hover: #6D6F78;
+            --btn_destructive_color: #F04747;
+            --btn_destructive_color_hover: #A12828;
+            --btn_link_color: #4F545C;
+            --btn_link_color_hover: #6D6F78;
+            --btn_emoji_color: #4F545C;
+            --btn_emoji_color_hover: #6D6F78;
+        }
+
+        :root{
+            --btn_text_color: #F2F3F5;
+
+            --link_color: #00A8FC;
+            --link_color_hover: #2EB6FF;
+
+            --font_size_default: 14px;
+            --font_size_small: 12px;
+            --font_size_large: 16px;
+            --font_size_big: 20px;
+
+            --btn_font_size: 14px;
+            --btn_icon_size: 14px;
+            --btn_emoji_size: 18px;
+        }
+    </style>
+    <style Components>
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 400;
+        }
+
+        body{
+            background: var(--body_background_color);
+            color: var(--body_text_color);
+        }
+
+        /* Discord components style */
+        .discord_btn[disabled], .discord_link[disabled], .discord_dpw_menu[disabled], .discord_message[disabled], .discord_input[disabled], .discord_search[disabled]{
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Discord buttons */
+        .discord_btn{
+            transition: background-color 0.2s ease-out;
+            font-size: var(--font_size_default);
+            color: var(--btn_text_color);
+            display: inline-flex;
+            padding-inline: 12px;
+            padding-block: 12px;
+            height: min-content;
+            width: max-content;
+            border-radius: 5px;
+            position: relative;
+            user-select: none;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            margin: 5px 0;
+            border: none;
+        }
+
+        .discord_btn + .discord_btn{margin-inline: 5px}
+        *:not(.discord_btn) + .discord_btn{margin-right: 5px}
+        .discord_btn + *:not(.discord_btn){margin-right: 0}
+
+        .discord_btn.btn_primary{background: var(--btn_primary_color)}
+        .discord_btn.btn_primary:not([disabled]):hover{background: var(--btn_primary_color_hover)}
+        .discord_btn.btn_success{background: var(--btn_success_color)}
+        .discord_btn.btn_success:not([disabled]):hover{background: var(--btn_success_color_hover)}
+        .discord_btn.btn_secondary{background: var(--btn_secondary_color)}
+        .discord_btn.btn_secondary:not([disabled]):hover{background: var(--btn_secondary_color_hover)}
+        .discord_btn.btn_destructive{background: var(--btn_destructive_color)}
+        .discord_btn.btn_destructive:not([disabled]):hover{background: var(--btn_destructive_color_hover)}
+        .discord_btn.btn_link{background: var(--btn_link_color)}
+        .discord_btn.btn_link:not([disabled]):hover{background: var(--btn_link_color_hover)}
+        .discord_btn.btn_emoji{background: var(--btn_emoji_color)}
+        .discord_btn.btn_emoji:not([disabled]):hover{background: var(--btn_emoji_color_hover)}
+
+        .discord_btn span{
+            background: transparent;
+            height: min-content;
+            width: max-content;
+            position: relative;
+            display: flex;
+            padding: 0;
+        }
+
+
+        /* test */
+        .color_square{
+            border: 2px solid #006CE7;
+            border-radius: 10%;
+            position: relative;
+            aspect-ratio: 1/1;
+            margin: 5px 0;
+            display: flex;
+            height: 30px;
+            width: 30px;
+        }
+
+
+        /* custom elements style */
+        .discord_btn:where(icon, emoji){
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            aspect-ratio: 1/1;
+            display: flex;
+        }
+
+        .discord_btn icon{
+            height: var(--font_size_default);
+            width: var(--font_size_default);
+            background: transparent;
+            margin-left: 8px;
+        }
+
+        .discord_btn.btn_emoji span{
+            margin-left: 30px;
+        }
+
+        .discord_btn emoji{
+            font-size: var(--btn_emoji_size);
+            height: var(--btn_icon_size);
+            width: var(--btn_icon_size);
+            background: transparent;
+            position: absolute;
+            top: 8.5px;
+        }
+
+
+        /* link styles */
+        .discord_link{
+            color: var(--link_color);
+            text-decoration: none;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .discord_link:not([disabled]):hover{
+            color: var(--link_color_hover);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="dark">
+    <div class="svg_icons" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path id="open_new_tab" d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
+    </div>
+
+
+    <div class="color_square" color="#57F287"></div>
+    
+    <button class="discord_btn btn_primary" disabled>
+        <span>Primary button</span>
+    </button>
+    <button class="discord_btn btn_success">
+        <span>Success button</span>
+    </button>
+    <button class="discord_btn btn_secondary">
+        <span>Secondary button</span>
+    </button>
+    <button class="discord_btn btn_destructive">
+        <span>Destructive button</span>
+    </button>
+    <button class="discord_btn btn_link">
+        <span>Link button</span>
+        <icon>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <use href="#open_new_tab" fill="currentColor" stroke="0.2"></use>
+            </svg>
+        </icon>
+    </button>
+    <button class="discord_btn btn_emoji">
+        <emoji>🤗</emoji>
+        <span>Emoji button</span>
+    </button>
+
+    <div class="discord_dpw_menu">
+        <option></option>
+        <option></option>
+        <option></option>
+    </div>
+
+    <div class="discord_message msg_info">
+        <icon i="info_circle, svg"></icon>
+        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ullam atque ipsa iure debitis possimus, facilis aperiam quibusdam, vel, molestias dolorem iste sint ipsum.</span>
+    </div>
+
+    <div class="discord_message msg_warm">
+        <icon i="warm_circle, svg"></icon>
+        <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod quos quas, assumenda consequatur quasi quae?</span>
+    </div>
+
+    <div class="discord_input itp_text" info="1, 30, `Hello world!`">
+        <input type="text" minlength="1" maxlength="255" placeholder="Hello world!">
+    </div>
+
+    <div class="discord_input itp_paragraph">
+        <textarea rows="1" minlength="1" maxlength="255" placeholder="Hello world!"></textarea>
+    </div>
+
+    <div class="discord_search">
+        <textarea rows="1" minlength="1" maxlength="255" placeholder="Search..." onkeydown="this.value.length == this.getAttribute('maxlength') ? alert('Osiągnięto maksymalną ilość znaków! (255)') : null"></textarea>
+    </div>
+
+    <div class="discord_link" href="https://google.com/" target="_blank" name="Google" height="600" width="400" left="center" top="center" disabled>Hello world!</div>
+
+    <script src="/src/icons.js"></script>
+    <script src="/src/components.js"></script>
+    <script src="/src/script.js"></script>
+    <script src="/src/server.js"></script>
+</body>
+</html>
